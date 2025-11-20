@@ -1,0 +1,31 @@
+//deployment kubernetes
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - name: myapp-container
+          image: myapp:latest
+          ports:
+
+            - containerPort: 3000
+
+
+COMMANDS:
+minikube start
+eval $(minikube docker-env)
+docker build -t myapp:latest .
+kubectl apply -f deployment.yaml
+kubectl get pods
+kubectl expose deployment myapp --type=NodePort --port=3000
+minikube service myapp

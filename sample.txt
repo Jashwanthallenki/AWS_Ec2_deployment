@@ -8,6 +8,69 @@ docker commit myubuntu myubuntu_image
 
 
 
+STEP 1: CREATE PROJECT FOLDER
+----------------------------
+Create a folder named "flask-app".
+Inside it, create these three files:
+  1. app.py
+  2. Dockerfile
+  3. docker-compose.yml
+
+
+STEP 2: WRITE CONTENT IN FILES
+------------------------------
+
+File: app.py
+------------
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "<h2>Welcome to Flask App Running in Docker!</h2>"
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000)
+
+
+File: Dockerfile
+----------------
+FROM python:3.10
+WORKDIR /app
+COPY app.py .
+RUN pip install flask
+EXPOSE 5000
+CMD ["python", "app.py"]
+
+
+File: docker-compose.yml
+------------------------
+version: "3.9"
+services:
+  flaskapp:
+    build: .
+    container_name: flask_container
+    ports:
+      - "5000:5000"
+
+
+STEP 3: RUN DOCKER COMPOSE
+--------------------------
+Open terminal inside "flask-app" folder and run:
+docker compose up --build
+
+
+STEP 4: OPEN BROWSER
+--------------------
+After build success, open browser and go to:
+http://localhost:5000
+
+You should see:
+Welcome to Flask App Running in Docker!
+
+
+
+
 
 
 MAVEN JAVA – FREESTYLE PIPELINE

@@ -1,3 +1,15 @@
+Step 1 — Create and run a new container (example: Ubuntu)
+docker run -it --name myubuntu ubuntu
+Make changes inside the container (install packages, edit files, etc.)
+
+Step 2 — Create an image from the container using docker commit
+docker commit myubuntu myubuntu_image
+
+
+
+
+
+
 MAVEN JAVA – FREESTYLE PIPELINE
 
 Job 1: MavenJava_Build

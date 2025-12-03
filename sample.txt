@@ -1,3 +1,75 @@
+Title: Steps to Generate SSH Key and Use it in GitHub (Windows)
+
+Step 1: Check if Git is Installed
+
+Open Command Prompt (CMD) or PowerShell.
+
+Run: git --version
+
+If Git is not installed, download and install from https://git-scm.com/downloads
+
+Step 2: Generate SSH Key
+
+Run: ssh-keygen -t ed25519 -C "your_github_email@example.com
+"
+
+If ed25519 is not supported, run: ssh-keygen -t rsa -b 4096 -C "your_github_email@example.com
+"
+
+Press Enter to save to the default location.
+
+Press Enter twice for passphrase (or set one if you prefer).
+
+Step 3: Start SSH Agent
+Run: eval "$(ssh-agent -s)"
+If that does not work in PowerShell:
+Run: Get-Service ssh-agent | Set-Service -StartupType Manual
+Then: Start-Service ssh-agent
+
+Step 4: Add SSH Key to SSH Agent
+Run: ssh-add ~/.ssh/id_ed25519
+(If RSA was generated instead, use ssh-add ~/.ssh/id_rsa)
+
+Step 5: Copy the Public SSH Key
+Run: clip < ~/.ssh/id_ed25519.pub
+If this does not work:
+Run: notepad ~/.ssh/id_ed25519.pub
+Copy the entire key.
+
+Step 6: Add SSH Key to GitHub
+
+Go to GitHub.
+
+Open Profile → Settings.
+
+Click SSH and GPG Keys.
+
+Click New SSH Key.
+
+Paste the copied key.
+
+Click Add SSH Key.
+
+Step 7: Test SSH Connection
+Run: ssh -T git@github.com
+
+Expected success message:
+Hi YOUR_USERNAME! You've successfully authenticated!
+
+Step 8: Clone a Repository Using SSH
+Run: git clone git@github.com
+:username/repository.git
+
+Step 9: Push Code Using SSH
+Run:
+git add .
+git commit -m "your commit message"
+git push origin main
+
+SSH setup completed successfully.
+
+
+
 Step 1 — Create and run a new container (example: Ubuntu)
 docker run -it --name myubuntu ubuntu
 Make changes inside the container (install packages, edit files, etc.)
